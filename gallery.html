@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+      color: #0077cc;
+    }
+
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+      background-color: #e0e0e0;
+      border-radius: 12px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      flex-direction: column;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-btn {
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+
+    .nav-btn:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📸 Welcome to the Ultimate Image Showcase 📸</h1>
+<div class="gallery-container">
+  <div class="gallery-item"><img src="img1.jpg" alt="img1"></div>
+  <div class="gallery-item"><img src="img2.jpg" alt="img2"></div>
+  <div class="gallery-item"><img src="img3.jpg" alt="img3"></div>
+  <div class="gallery-item"><img src="img4.jpg" alt="img4"></div>
+  <div class="gallery-item"><img src="img5.jpg" alt="img5"></div>
+  <div class="gallery-item"><img src="img6.jpg">alt="img6"></div>
+  <div class="gallery-item"><img src="img7.jpg">alt="img7"></div>
+  <div class="gallery-item"><img src="img8.jpg">alt="img8"></div>
+  
+</div>
+
+<!-- Modal for full screen image -->
+<div class="modal" id="imageModal">
+  <span class="close-btn" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg" src="">
+  <div class="nav-buttons">
+    <button class="nav-btn" onclick="prevImage()">⬅️ Previous</button>
+    <button class="nav-btn" onclick="nextImage()">Next ➡️</button>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  const galleryImages = document.querySelectorAll(".gallery-item img");
+  let currentIndex = 0;
+
+  galleryImages.forEach((img, index) => {
+    img.addEventListener("click", () => {
+      currentIndex = index;
+      openModal(img.src);
+    });
+  });
+
+  function openModal(src) {
+    modal.style.display = "flex";
+    modalImg.src = src;
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+    modalImg.src = "";
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % galleryImages.length;
+    modalImg.src = galleryImages[currentIndex].src;
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+    modalImg.src = galleryImages[currentIndex].src;
+  }
+</script>
+
+</body>
+</html>
