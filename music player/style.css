@@ -1,0 +1,26 @@
+body {
+  background: #121212;
+  color: white;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+.music-player {
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.controls button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
