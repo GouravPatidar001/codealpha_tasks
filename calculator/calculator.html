@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Style Calculator</title>
+    <style>
+        /* Background effect */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e1e1e, #444);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Calculator container */
+        .calculator {
+            width: 340px;
+            background: black;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Display screen */
+        .display {
+            width: 100%;
+            height: 120px;
+            background: black;
+            color: white;
+            text-align: right;
+            font-size: 2.8em;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            box-sizing: border-box;
+        }
+
+        /* Buttons layout */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        /* Button styles */
+        button {
+            width: 75px;
+            height: 75px;
+            border: none;
+            border-radius: 50%;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Number buttons */
+        .num {
+            background: #d4d4d2;
+            color: black;
+        }
+
+        /* Operator buttons */
+        .operator, .clear, .equal {
+            background: #ff9500;
+            color: white;
+        }
+
+        /* Zero button */
+        .zero {
+            grid-column: span 2;
+            width: 160px;
+            border-radius: 40px;
+        }
+
+        /* Button hover effect */
+        button:hover {
+            filter: brightness(1.3);
+        }
+
+        /* Button active effect */
+        button:active {
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="appendOperator('/')">÷</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            <button class="operator" onclick="appendOperator('-')">−</button>
+
+            <button class="num" onclick="appendNumber('7')">7</button>
+            <button class="num" onclick="appendNumber('8')">8</button>
+            <button class="num" onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+
+            <button class="num" onclick="appendNumber('4')">4</button>
+            <button class="num" onclick="appendNumber('5')">5</button>
+            <button class="num" onclick="appendNumber('6')">6</button>
+            <button class="equal" onclick="calculateResult()">=</button>
+
+            <button class="num" onclick="appendNumber('1')">1</button>
+            <button class="num" onclick="appendNumber('2')">2</button>
+            <button class="num" onclick="appendNumber('3')">3</button>
+
+            <button class="num zero" onclick="appendNumber('0')">0</button>
+            <button class="num" onclick="appendNumber('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById("display");
+        let currentInput = "";
+        
+        function appendNumber(number) {
+            if (currentInput === "0" || currentInput === "Error") {
+                currentInput = number;
+            } else {
+                currentInput += number;
+            }
+            updateDisplay();
+        }
+
+        function appendOperator(operator) {
+            if (currentInput !== "" && !isNaN(currentInput[currentInput.length - 1])) {
+                currentInput += operator;
+                updateDisplay();
+            }
+        }
+
+        function clearDisplay() {
+            currentInput = "";
+            updateDisplay();
+        }
+
+        function calculateResult() {
+            try {
+                currentInput = eval(currentInput).toString();
+            } catch (e) {
+                currentInput = "Error";
+            }
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            display.innerText = currentInput === "" ? "0" : currentInput;
+        }
+    </script>
+
+</body>
+</html>
